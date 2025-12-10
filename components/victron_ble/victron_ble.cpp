@@ -122,6 +122,14 @@ void VictronBle::update() {
                       [this]() { this->on_orion_xs_message_callback_.call(&this->last_package_.data.orion_xs); });
         }
         break;
+      case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+        ESP_LOGD(TAG, "[%s] Received SMART_BMS message.", this->address_str().c_str());
+        if (this->on_smart_bms_message_callback_.size() > 0) {
+          this->defer("VictronBleE", [this]() {
+            this->on_smart_bms_message_callback_.call(&this->last_package_.data.smart_bms);
+          });
+        }
+        break;
       default:
         break;
     }
@@ -308,7 +316,7 @@ bool VictronBle::is_record_type_supported_(const VICTRON_BLE_RECORD_TYPE record_
       expected_len = sizeof(VICTRON_BLE_RECORD_ORION_XS);
       break;
     default:
-      ESP_LOGW(TAG, "[%s] Unsupported record type found %02X", this->address_str().c_str(), (u_int8_t) record_type);
+      ESP_LOGW(TAG, "[%s] Unsupported record type %02X", this->address_str().c_str(), (u_int8_t) record_type);
       return false;
       break;
   }

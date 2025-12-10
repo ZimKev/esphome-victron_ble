@@ -117,5 +117,13 @@ class OrionXsMessageTrigger : public Trigger<const VICTRON_BLE_RECORD_ORION_XS *
   }
 };
 
+class SmartBmsMessageTrigger : public Trigger<const VICTRON_BLE_RECORD_SMART_BMS *> {
+ public:
+  explicit SmartBmsMessageTrigger(VictronBle *parent) {
+    parent->add_on_smart_bms_message_callback(
+        [this](const VICTRON_BLE_RECORD_SMART_BMS *message) { this->trigger(message); });
+  }
+};
+
 }  // namespace victron_ble
 }  // namespace esphome
