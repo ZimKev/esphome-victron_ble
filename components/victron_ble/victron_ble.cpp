@@ -315,6 +315,12 @@ bool VictronBle::is_record_type_supported_(const VICTRON_BLE_RECORD_TYPE record_
       }
       expected_len = sizeof(VICTRON_BLE_RECORD_ORION_XS);
       break;
+    case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+      if (crypted_len >= sizeof(VICTRON_BLE_RECORD_SMART_BMS)) {
+        return true;
+      }
+      expected_len = sizeof(VICTRON_BLE_RECORD_SMART_BMS);
+      break;      
     default:
       ESP_LOGW(TAG, "[%s] Unsupported record type 0x%02X", this->address_str().c_str(), (u_int8_t) record_type);
       return false;
