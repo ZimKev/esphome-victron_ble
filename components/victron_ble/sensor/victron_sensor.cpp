@@ -189,6 +189,9 @@ void VictronSensor::register_callback() {
           case VICTRON_BLE_RECORD_TYPE::DC_ENERGY_METER:
             this->publish_state_(msg->data.dc_energy_meter.battery_current);
             break;
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.battery_current);
+            break;
           default:
             ESP_LOGW(TAG, "[%s] Device has no `battery current` field.", this->parent_->address_str().c_str());
             this->publish_state(NAN);
@@ -229,6 +232,9 @@ void VictronSensor::register_callback() {
             break;
           case VICTRON_BLE_RECORD_TYPE::DC_ENERGY_METER:
             this->publish_state_(msg->data.dc_energy_meter.battery_voltage);
+            break;
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.battery_current);
             break;
           default:
             ESP_LOGW(TAG, "[%s] Device has no `battery voltage` field.", this->parent_->address_str().c_str());
