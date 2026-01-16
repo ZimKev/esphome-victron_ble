@@ -826,7 +826,8 @@ struct VICTRON_BLE_RECORD_LYNX_SMART_BMS {  // NOLINT(readability-identifier-nam
 
 struct VICTRON_BLE_RECORD_SMART_BMS {  // NOLINT(readability-identifier-naming,altera-struct-pack-align)
   VE_REG_DEVICE_STATE device_state;
-  vic_16bit_0_01 battery_voltage;
+  vic_16bit_0_1 battery_current;
+  vic_14bit_0_01_positive battery_voltage : 14;
 } __attribute__((packed));
 
 enum class VE_REG_AC_IN_ACTIVE : u_int8_t {
