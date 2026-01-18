@@ -825,9 +825,18 @@ struct VICTRON_BLE_RECORD_LYNX_SMART_BMS {  // NOLINT(readability-identifier-nam
 } __attribute__((packed));
 
 struct VICTRON_BLE_RECORD_SMART_BMS {  // NOLINT(readability-identifier-naming,altera-struct-pack-align)
-  VE_REG_DEVICE_STATE device_state;
+  // TODO
+  u_int8_t error;
+  vic_16bit_1_positive ttg;
+  vic_16bit_0_01 battery_voltage;
   vic_16bit_0_1 battery_current;
-  vic_14bit_0_01_positive battery_voltage : 14;
+  // TODO
+  u_int16_t io_status;
+  // TODO
+  u_int32_t warnings_alarms : 18;
+  vic_10bit_0_1_positive soc : 10;
+  vic_20bit_0_1_negative consumed_ah : 20;
+  vic_temperature_7bit temperature : 7;
 } __attribute__((packed));
 
 enum class VE_REG_AC_IN_ACTIVE : u_int8_t {
@@ -990,7 +999,7 @@ class VictronBle : public esp32_ble_tracker::ESPBTDeviceListener, public Compone
   VICTRON_MESSAGE_STORAGE_CB(ve_bus, VICTRON_BLE_RECORD_VE_BUS)
   VICTRON_MESSAGE_STORAGE_CB(dc_energy_meter, VICTRON_BLE_RECORD_DC_ENERGY_METER)
   VICTRON_MESSAGE_STORAGE_CB(orion_xs, VICTRON_BLE_RECORD_ORION_XS)
-   VICTRON_MESSAGE_STORAGE_CB(smart_bms, VICTRON_BLE_RECORD_SMART_BMS)
+  VICTRON_MESSAGE_STORAGE_CB(smart_bms, VICTRON_BLE_RECORD_SMART_BMS)
 
 #undef VICTRON_MESSAGE_STORAGE_CB
 
