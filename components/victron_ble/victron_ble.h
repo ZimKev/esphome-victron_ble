@@ -828,15 +828,13 @@ struct VICTRON_BLE_RECORD_SMART_BMS {  // NOLINT(readability-identifier-naming,a
   // TODO
   u_int8_t error;
   vic_16bit_1_positive ttg;
-  vic_16bit_0_01 battery_voltage;
-  vic_16bit_0_1 battery_current;
+  vic_16bit_0_01 battery_voltage_1;
+  vic_16bit_0_01 battery_voltage_2;
+  vic_16bit_0_01 battery_voltage_3;
+  vic_10bit_0_1_positive soc : 10;
   // TODO
   u_int16_t io_status;
   // TODO
-  u_int32_t warnings_alarms : 18;
-  vic_10bit_0_1_positive soc : 10;
-  vic_20bit_0_1_negative consumed_ah : 20;
-  vic_temperature_7bit temperature : 7;
 } __attribute__((packed));
 
 enum class VE_REG_AC_IN_ACTIVE : u_int8_t {
