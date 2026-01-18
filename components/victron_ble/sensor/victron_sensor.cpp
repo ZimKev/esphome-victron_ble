@@ -668,9 +668,19 @@ void VictronSensor::register_callback() {
       // AC_CHARGER
     case VICTRON_SENSOR_TYPE::BATTERY_CURRENT_2:
     case VICTRON_SENSOR_TYPE::BATTERY_VOLTAGE_2:
+      this->parent_->add_on_message_callback([this](const VictronBleData *msg) {
+        switch (msg->record_type) {
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.battery_voltage_2);
+            break;
     case VICTRON_SENSOR_TYPE::BATTERY_POWER_2:
     case VICTRON_SENSOR_TYPE::BATTERY_CURRENT_3:
     case VICTRON_SENSOR_TYPE::BATTERY_VOLTAGE_3:
+      this->parent_->add_on_message_callback([this](const VictronBleData *msg) {
+        switch (msg->record_type) {
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.battery_voltage_3);
+            break;
     case VICTRON_SENSOR_TYPE::BATTERY_POWER_3:
       this->parent_->add_on_ac_charger_message_callback([this](const VICTRON_BLE_RECORD_AC_CHARGER *val) {
         switch (this->type_) {
