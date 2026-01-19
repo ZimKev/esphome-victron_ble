@@ -673,6 +673,10 @@ void VictronSensor::register_callback() {
           case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
             this->publish_state_(msg->data.smart_bms.battery_voltage_2);
             break;
+          default:
+            ESP_LOGW(TAG, "[%s] Device has no `battery voltage 2` field.", this->parent_->address_str().c_str());
+            this->publish_state(NAN);
+            break;
         }
       });
       break;
@@ -684,6 +688,10 @@ void VictronSensor::register_callback() {
         switch (msg->record_type) {
           case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
             this->publish_state_(msg->data.smart_bms.battery_voltage_3);
+            break;
+          default:
+            ESP_LOGW(TAG, "[%s] Device has no `battery voltage 3` field.", this->parent_->address_str().c_str());
+            this->publish_state(NAN);
             break;
         }
       });
