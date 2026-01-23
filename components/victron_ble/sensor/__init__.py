@@ -384,7 +384,7 @@ CONF_SUPPORTED_TYPE = {
         CONF_ACCURACY_DECIMALS: 1,
         CONF_DEVICE_CLASS: DEVICE_CLASS_BATTERY,
     },
-
+}
 
 def set_default_based_on_type():
     def set_defaults_(config):
