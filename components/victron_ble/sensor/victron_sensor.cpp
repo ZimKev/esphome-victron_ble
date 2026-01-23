@@ -816,6 +816,20 @@ void VictronSensor::register_callback() {
       });
       break;      
 
+    case VICTRON_SENSOR_TYPE::CHARGE_LEVEL:
+      this->parent_->add_on_message_callback([this](const VictronBleData *msg) {
+        switch (msg->record_type) {
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.charge_level);
+            break;
+          default:
+            ESP_LOGW(TAG, "[%s] Device has no `Charge Level` field.", this->parent_->address_str().c_str());
+            this->publish_state(NAN);
+            break;
+        }
+      });
+      break; 
+
     default:
       break;
   }
