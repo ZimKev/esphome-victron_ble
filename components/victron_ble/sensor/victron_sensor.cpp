@@ -9,7 +9,7 @@ static const char *const TAG = "victron_ble.sensor";
 // void VictronSensor::dump_config() {
 //   LOG_SENSOR("", "Victron Sensor", this);
 //   ESP_LOGCONFIG(TAG, "  Type '%s'", enum_to_c_str(this->type_));
-// }
+// } 
 
 void VictronSensor::register_callback() {
   switch (this->type_) {
