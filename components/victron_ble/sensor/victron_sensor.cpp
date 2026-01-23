@@ -810,6 +810,35 @@ void VictronSensor::register_callback() {
       });
       break;
 
+      //SMART_BMS 12/200
+    case VICTRON_SENSOR_TYPE::SYSTEM_PLUS_VOLTAGE:
+      this->parent_->add_on_message_callback([this](const VictronBleData *msg) {
+        switch (msg->record_type) {
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.system_plus_voltage);
+            break;
+          default:
+            ESP_LOGW(TAG, "[%s] Device has no `System+ Voltage` field.", this->parent_->address_str().c_str());
+            this->publish_state(NAN);
+            break;
+        }
+      });
+      break;
+
+    case VICTRON_SENSOR_TYPE::ALTERNATOR_VOLTAGE:
+      this->parent_->add_on_message_callback([this](const VictronBleData *msg) {
+        switch (msg->record_type) {
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.alternator_voltage);
+            break;
+          default:
+            ESP_LOGW(TAG, "[%s] Device has no `Alternator Voltage` field.", this->parent_->address_str().c_str());
+            this->publish_state(NAN);
+            break;
+        }
+      });
+      break;      
+
     default:
       break;
   }
