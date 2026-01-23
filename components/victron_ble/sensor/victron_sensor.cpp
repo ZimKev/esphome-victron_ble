@@ -528,9 +528,6 @@ void VictronSensor::register_callback() {
           case VICTRON_BLE_RECORD_TYPE::VE_BUS:
             this->publish_state_(msg->data.ve_bus.soc);
             break;
-          case VICTRON_BLE_RECORD_TYPE::SMART_BMS: //Testing Charg Current
-            this->publish_state_(msg->data.smart_bms.soc);
-            break;
           default:
             ESP_LOGW(TAG, "[%s] Device has no `state of charge` field.", this->parent_->address_str().c_str());
             this->publish_state(NAN);
