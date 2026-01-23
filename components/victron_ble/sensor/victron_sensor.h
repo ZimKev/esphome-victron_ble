@@ -76,6 +76,10 @@ enum class VICTRON_SENSOR_TYPE {
   INPUT_CURRENT,
   OUTPUT_POWER,
   INPUT_POWER,
+
+  // SMART_BMS 12/200
+  SYSTEM_PLUS_VOLTAGE,
+  ALTERNATOR_VOLTAGE,
 };
 
 #ifdef ESPHOME_LOG_HAS_CONFIG
@@ -201,6 +205,12 @@ static const char *enum_to_c_str(const VICTRON_SENSOR_TYPE val) {
       return "OUTPUT_POWER";
     case VICTRON_SENSOR_TYPE::INPUT_POWER:
       return "INPUT_POWER";
+
+    // SMART_BMS 12/200
+    case VICTRON_SENSOR_TYPE::SYSTEM_PLUS_VOLTAGE:
+      return "SYSTEM_PLUS_VOLTAGE";
+    case VICTRON_SENSOR_TYPE::ALTERNATOR_VOLTAGE:
+      return "ALTERNATOR_VOLTAGE";
 
     default:
       return "";
