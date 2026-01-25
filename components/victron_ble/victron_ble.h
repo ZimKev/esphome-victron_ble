@@ -826,12 +826,11 @@ struct VICTRON_BLE_RECORD_LYNX_SMART_BMS {  // NOLINT(readability-identifier-nam
 
 struct VICTRON_BLE_RECORD_SMART_BMS {  // NOLINT(readability-identifier-naming,altera-struct-pack-align)
   u_int8_t error;
-  vic_16bit_1 battery_current; //test
   vic_16bit_1 active_ac_in_power; //test
-  vic_16bit_1 battery_voltage;
-  vic_16bit_1 system_plus_voltage;
-  vic_16bit_1 alternator_voltage;
-  vic_9bit_0_1_positive charge_level;
+  vic_16bit_0_01_noNAN battery_voltage;
+  vic_16bit_0_01_noNAN system_plus_voltage;
+  vic_16bit_0_01_noNAN alternator_voltage;
+  vic_7bit_1 charge_level;
   // TODO
   // TODO
 } __attribute__((packed));
