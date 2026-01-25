@@ -828,10 +828,10 @@ struct VICTRON_BLE_RECORD_SMART_BMS {  // NOLINT(readability-identifier-naming,a
   // TODO
   u_int8_t error;
   u_int16_t io_status;
-  vic_16bit_0_01 battery_voltage;
-  vic_16bit_0_01 system_plus_voltage;
-  vic_16bit_0_01 alternator_voltage;
-  vic_7bit_1 charge_level;
+  vic_14bit_0_01_positive battery_voltage;
+  vic_14bit_0_01_positive system_plus_voltage;
+  vic_14bit_0_01_positive alternator_voltage;
+  vic_9bit_0_1_positive charge_level;
   // TODO
   // TODO
 } __attribute__((packed));
