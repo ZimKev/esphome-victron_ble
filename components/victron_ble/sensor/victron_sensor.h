@@ -214,7 +214,6 @@ static const char *enum_to_c_str(const VICTRON_SENSOR_TYPE val) {
       return "ALTERNATOR_VOLTAGE";
     case VICTRON_SENSOR_TYPE::CHARGE_LEVEL:
       return "CHARGE_LEVEL";
-
     default:
       return "";
   }
