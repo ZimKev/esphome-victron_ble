@@ -73,3 +73,5 @@ enum vic_10bit_0_1_positive : u_int16_t;
 
 // 1 °C, -40 .. 86 °C - Temperature = Record value - 40
 enum vic_temperature_7bit : u_int16_t;
+
+enum vic_7bit_1 : u_int16_t;
