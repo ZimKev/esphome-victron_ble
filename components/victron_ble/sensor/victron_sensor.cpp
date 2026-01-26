@@ -9,7 +9,7 @@ static const char *const TAG = "victron_ble.sensor";
 // void VictronSensor::dump_config() {
 //   LOG_SENSOR("", "Victron Sensor", this);
 //   ESP_LOGCONFIG(TAG, "  Type '%s'", enum_to_c_str(this->type_));
-// }
+// } 
 
 void VictronSensor::register_callback() {
   switch (this->type_) {
@@ -189,6 +189,9 @@ void VictronSensor::register_callback() {
           case VICTRON_BLE_RECORD_TYPE::DC_ENERGY_METER:
             this->publish_state_(msg->data.dc_energy_meter.battery_current);
             break;
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.battery_voltage);
+            break;
           default:
             ESP_LOGW(TAG, "[%s] Device has no `battery current` field.", this->parent_->address_str().c_str());
             this->publish_state(NAN);
@@ -229,6 +232,9 @@ void VictronSensor::register_callback() {
             break;
           case VICTRON_BLE_RECORD_TYPE::DC_ENERGY_METER:
             this->publish_state_(msg->data.dc_energy_meter.battery_voltage);
+            break;
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.battery_voltage);
             break;
           default:
             ESP_LOGW(TAG, "[%s] Device has no `battery voltage` field.", this->parent_->address_str().c_str());
@@ -777,6 +783,49 @@ void VictronSensor::register_callback() {
         }
       });
       break;
+
+      //SMART_BMS 12/200
+    case VICTRON_SENSOR_TYPE::SYSTEM_PLUS_VOLTAGE:
+      this->parent_->add_on_message_callback([this](const VictronBleData *msg) {
+        switch (msg->record_type) {
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.system_plus_voltage);
+            break;
+          default:
+            ESP_LOGW(TAG, "[%s] Device has no `System+ Voltage` field.", this->parent_->address_str().c_str());
+            this->publish_state(NAN);
+            break;
+        }
+      });
+      break;
+
+    case VICTRON_SENSOR_TYPE::ALTERNATOR_VOLTAGE:
+      this->parent_->add_on_message_callback([this](const VictronBleData *msg) {
+        switch (msg->record_type) {
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.alternator_voltage);
+            break;
+          default:
+            ESP_LOGW(TAG, "[%s] Device has no `Alternator Voltage` field.", this->parent_->address_str().c_str());
+            this->publish_state(NAN);
+            break;
+        }
+      });
+      break;      
+
+    case VICTRON_SENSOR_TYPE::CHARGE_LEVEL:
+      this->parent_->add_on_message_callback([this](const VictronBleData *msg) {
+        switch (msg->record_type) {
+          case VICTRON_BLE_RECORD_TYPE::SMART_BMS:
+            this->publish_state_(msg->data.smart_bms.charge_level);
+            break;
+          default:
+            ESP_LOGW(TAG, "[%s] Device has no `Charge Level` field.", this->parent_->address_str().c_str());
+            this->publish_state(NAN);
+            break;
+        }
+      });
+      break; 
 
     default:
       break;

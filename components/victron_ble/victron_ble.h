@@ -330,6 +330,8 @@ enum class VICTRON_BLE_RECORD_TYPE : u_int8_t {
   VE_BUS = 0x0C,
   // VICTRON_BLE_RECORD_DC_ENERGY_METER
   DC_ENERGY_METER = 0x0D,
+  // VICTRON_BLE_RECORD_SMART_BMS_200A_
+  SMART_BMS = 0x0E,
   // VICTRON_BLE_RECORD_ORION_XS
   ORION_XS = 0x0F,
 };
@@ -822,6 +824,17 @@ struct VICTRON_BLE_RECORD_LYNX_SMART_BMS {  // NOLINT(readability-identifier-nam
   vic_temperature_7bit temperature : 7;
 } __attribute__((packed));
 
+struct VICTRON_BLE_RECORD_SMART_BMS {  // NOLINT(readability-identifier-naming,altera-struct-pack-align)
+  u_int8_t error;
+  vic_16bit_1 active_ac_in_power; //test
+  vic_16bit_0_01_noNAN battery_voltage;
+  vic_16bit_0_01_noNAN system_plus_voltage;
+  vic_16bit_0_01_noNAN alternator_voltage;
+  vic_7bit_1 charge_level : 7;
+  // TODO
+  // TODO
+} __attribute__((packed));
+
 enum class VE_REG_AC_IN_ACTIVE : u_int8_t {
   // AC in 1
   AC_IN_1 = 0,
@@ -907,6 +920,7 @@ struct VictronBleData {
     VICTRON_BLE_RECORD_VE_BUS ve_bus;
     VICTRON_BLE_RECORD_DC_ENERGY_METER dc_energy_meter;
     VICTRON_BLE_RECORD_ORION_XS orion_xs;
+    VICTRON_BLE_RECORD_SMART_BMS smart_bms;
     u_int8_t raw[VICTRON_ENCRYPTED_DATA_MAX_SIZE];
   } data;
 };
@@ -953,6 +967,7 @@ class VictronBle : public esp32_ble_tracker::ESPBTDeviceListener, public Compone
   VICTRON_MESSAGE_ADD_CB(ve_bus, VICTRON_BLE_RECORD_VE_BUS)
   VICTRON_MESSAGE_ADD_CB(dc_energy_meter, VICTRON_BLE_RECORD_DC_ENERGY_METER)
   VICTRON_MESSAGE_ADD_CB(orion_xs, VICTRON_BLE_RECORD_ORION_XS)
+  VICTRON_MESSAGE_ADD_CB(smart_bms, VICTRON_BLE_RECORD_SMART_BMS)
 
 #undef VICTRON_MESSAGE_ADD_CB
 
@@ -980,6 +995,7 @@ class VictronBle : public esp32_ble_tracker::ESPBTDeviceListener, public Compone
   VICTRON_MESSAGE_STORAGE_CB(ve_bus, VICTRON_BLE_RECORD_VE_BUS)
   VICTRON_MESSAGE_STORAGE_CB(dc_energy_meter, VICTRON_BLE_RECORD_DC_ENERGY_METER)
   VICTRON_MESSAGE_STORAGE_CB(orion_xs, VICTRON_BLE_RECORD_ORION_XS)
+  VICTRON_MESSAGE_STORAGE_CB(smart_bms, VICTRON_BLE_RECORD_SMART_BMS)
 
 #undef VICTRON_MESSAGE_STORAGE_CB
 
